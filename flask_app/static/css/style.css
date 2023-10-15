@@ -1,0 +1,198 @@
+/* Add your custom styles here */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #343a40;
+    color: white;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.navbar-links h2 {
+    margin: 0;
+    font-size: 18px;
+    align-self: center;
+}
+
+.container {
+    padding: 20px;
+}
+
+.flash-messages {
+    margin-top: 10px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+
+.contact-table {
+    margin: 0 auto;
+    display: inline-table;
+}
+
+/*this below is for the profile icon on the show_contact.html*/
+.bi-person {
+    color: #6c757d;
+}
+
+.d-flex.justify-content-center.align-items-center {
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Base table styling */
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin: 20px 0;
+}
+
+/* Header styling */
+.contact-table thead th {
+    background-color: #f2f2f2;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Row and cell styling */
+.contact-table tbody tr {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.contact-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.contact-table tbody td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Button styling */
+.btn {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left-column {
+    flex: 0 0 18rem;  /* Lock the width to 18rem */
+}
+
+.right-wall {
+    flex: 1;  /* Take up the remaining space */
+}
+.flex-container {
+    display: flex;
+    flex-direction: column; /* stacks children vertically */
+    align-items: center; /* aligns children horizontally */
+}
+
+.table-container, .task-container {
+    max-height: 500px; /* Set a max-height */
+    overflow-y: auto; /* Add a scrollbar */
+    width: 80%; /* Set the width */
+}
+
+
+/* Task table styling */
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin: 20px 0;
+}
+
+/* Header styling */
+.task-table thead th {
+    background-color: #f2f2f2;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Row and cell styling */
+.task-table tbody tr {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.task-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.task-table tbody td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Button styling */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-box,
+.login-box {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-box {
+    margin-top: 20px;
+}
+.flex-container-login-registration{
+    margin: 500px;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Edit {{ contact.name}}</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>PipelinePal</h1>
+            <p>A site to manage your sales pipeline!</p>
+        </div>
+        <div class="navbar-links">
+
+            {% for user in user %}
+            <h2>Welcome, {{ user.first_name }}</h2>
+            {% endfor %}
+        </div>
+        <div class="navbar-links">
+            <a href="/dashboard/{{ session['user_id'] }}">
+                <button class="btn btn-secondary">Dashboard</button>
+            </a>
+            <a href="/">
+                <button class="btn btn-secondary">Logout</button>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h3 class="mb-4">Edit contact</h3>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/edit/{{ contact.id }}">
+            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+            
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" name="name" value="{{ contact.name }}" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" name="email" value="{{ contact.email }}" required>
+            <br>
+            <label for="phone_number">Phone Number:</label>
+            <input type="test" class="form-control" name="phone_number" value="{{ contact.phone_number }}" required>
+            <br>
+            <label for="product_of_interest">Product of Interest:</label>
+            <input type="text" class="form-control" name="product_of_interest" value="{{ contact.product_of_interest }}"
+                required>
+            <br>
+            <label for="notes">Notes:</label>
+            <textarea class="form-control" name="notes" required>{{ contact.notes }}</textarea>
+            <br>
+            <label for="last_sentiment">Last Sentiment:</label>
+            <select id="last_sentiment" name="last_sentiment" class="form-control"value="{{ contact.last_sentiment }}">
+                <option value="Follow up at a later date">Follow up at a later date</option>
+                <option value="Not interested">Not interested</option>
+                <option value="Booked meeting">Booked meeting</option>
+                <option value="No answer">No answer</option>
+                <option value="Not yet contacted">Not yet contacted</option>
+            </select>
+            <br>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

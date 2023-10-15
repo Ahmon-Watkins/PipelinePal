@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>New Contact</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>PipelinePal</h1>
+            <p>A site to manage your sales pipeline!</p>
+        </div>
+        <div class="navbar-links">
+            <!-- <a href="/my_trees/{{ session['user_id'] }}">
+                <button class="btn btn-secondary">My Trees</button>
+            </a> -->
+            {% for user in user %}
+            <h2>Welcome, {{ user.first_name }}</h2>
+            {% endfor %}
+        </div>
+        <div class="navbar-links">
+            <a href="/dashboard/{{ session['user_id'] }}">
+                <button class="btn btn-secondary">Dashboard</button>
+            </a>
+            <a href="/">
+                <button class="btn btn-secondary">Logout</button>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Add new contact</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form action="/create/contact" method="post" class="needs-validation" novalidate>
+            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes:</label>
+                <input type="text" id="notes" name="notes" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_sentiment">Sentiment:</label>
+                <select id="last_sentiment" name="last_sentiment" class="form-control" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Follow up at a later date">Follow up at a later date</option>
+                    <option value="Not interested">Not interested</option>
+                    <option value="Booked meeting">Booked meeting</option>
+                    <option value="No answer">No answer</option>
+                    <option value="Not yet contacted">Not yet contacted</option>
+                    
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="product_of_interest">Product of Interest:</label>
+                <input type="text" id="product_of_interest" name="product_of_interest" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add new contact</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

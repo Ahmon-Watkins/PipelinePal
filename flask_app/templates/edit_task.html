@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Edit Task</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>PipelinePal</h1>
+                <p>A site to manage your sales pipeline!</p>
+        </div>
+        <div class="navbar-links">
+            {% for user in user %}
+            <h2>Welcome, {{ user.first_name }}</h2>
+            {% endfor %}
+        </div>
+        <div class="navbar-links">
+            <a href="/dashboard/{{ session['user_id'] }}">
+                <button class="btn btn-secondary">Dashboard</button>
+            </a>
+            <a href="/">
+                <button class="btn btn-secondary">Logout</button>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h3 class="mb-4">Edit contact</h3>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <h1>Edit Task</h1>
+
+        <form method="POST" action="/update_task/{{ task.id }}">
+            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+            <input type="hidden" name="contact_id" value="{{ task.contact_id }}">
+            
+            <label for="task_type">Task Type:</label>
+            <input type="text" class="form-control" name="task_type" value="{{ task.task_type }}" required>
+            <br>
+    
+            <label for="due_date">Due Date:</label>
+            <input type="datetime-local" class="form-control" name="due_date" value="{{ task.due_date }}" required>
+            <br>
+    
+            <label for="task_notes">Task Notes:</label>
+            <textarea class="form-control" name="task_notes" required>{{ task.task_notes }}</textarea>
+            <br>
+    
+            <button type="submit" class="btn btn-primary">Update Task</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

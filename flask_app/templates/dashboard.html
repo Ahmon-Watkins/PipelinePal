@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1>PipelinePal</h1>
+                <p>A site to manage your sales pipeline!</p>
+            </div>
+            <div class="navbar-links">
+
+                {% for user in user %}
+                <h2>Welcome, {{ user.first_name }}</h2>
+                {% endfor %}
+            </div>
+            <div class="navbar-links">
+                <a href="/new/contact">
+                    <button class="btn btn-primary">Add new contact</button>
+                </a>
+                <a href="/">
+                    <button class="btn btn-secondary">Logout</button>
+                </a>
+            </div>
+        </nav>
+
+        <div class="flex-container">
+            <div class="table-container">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <table class="contact-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Last Sentiment</th>
+                            <th>Created by</th>
+                            <th>View Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if all_the_contacts %}
+                            {% for one_contact in all_the_contacts %}
+                                <tr>
+                                    <td>{{ one_contact.name }}</td>
+                                    <td>{{ one_contact.email }}</td>
+                                    <td>{{ one_contact.phone_number }}</td>
+                                    <td>{{ one_contact.last_sentiment }}</td>
+                                    <td>{{ one_contact.creator.first_name }} {{ one_contact.creator.last_name }}</td>
+                                    <td>
+                                        <a href="/show/{{ one_contact.id }}">
+                                            <button class="btn btn-secondary">Details</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7">No contacts available.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="task-container">
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Task Type</th>
+                        <th>Due Date</th>
+                        <th>Task Notes</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if all_the_tasks %}
+                        {% for one_task in all_the_tasks %}
+                            <tr>
+                                <td>{{ one_task.contact_name }}</td>
+
+                                <td>{{ one_task.task_type }}</td>
+                                <td>{{ one_task.due_date }}</td>
+                                <td>{{ one_task.task_notes }}</td>
+                                <td>  <!-- New Cell -->
+                                    <a href="/show/{{ one_task.contact_id }}" class="btn btn-info">View Contact</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No tasks available.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

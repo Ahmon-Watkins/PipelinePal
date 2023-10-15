@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>View Contact</title>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1>PipelinePal</h1>
+                <p>A site to manage your sales pipeline!</p>
+            </div>
+            <div class="navbar-links">
+                {% for user in user %}
+                <h2>Welcome, {{ user.first_name }}</h2>
+                {% endfor %}
+            </div>
+            <div class="navbar-links">
+                <a href="/dashboard/{{ session['user_id'] }}">
+                    <button class="btn btn-secondary">Dashboard</button>
+                </a>
+                <a href="/">
+                    <button class="btn btn-secondary">Logout</button>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="container flash-messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="main-container">
+        <!-- this below is the left side colum -->
+        <div class="card left-column" style="width: 18rem;">
+            <!-- Using Bootstrap Icon as placeholder -->
+            <div class="d-flex justify-content-center align-items-center"
+                style="background-color: #f0f0f0; height: 50px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1c-5 0-6 2.686-6 4v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1c0-1.314-1-4-6-4z" />
+                </svg>
+            </div>
+            <!-- End of placeholder -->
+            <div class="card-body">
+                <h5 class="card-title">{{ contact.name }}</h5>
+                <p class="card-text"><strong>Email:</strong> {{ contact.email }}</p>
+                <p class="card-text"><strong>Phone Number:</strong> {{ contact.phone_number }}</p>
+                <p class="card-text"><strong>Product of Interest:</strong> {{ contact.product_of_interest }}</p>
+                <p class="card-text"><strong>Notes:</strong> {{ contact.notes }}</p>
+                <p class="card-text"><strong>Last Sentiment:</strong> {{ contact.last_sentiment }}</p>
+                
+
+                <a href="/edit/{{ contact.id }}">
+                    <button type="button" class="btn btn-primary">Edit</button>
+                </a>
+                <form action="/delete/{{ contact.id }}" method="POST">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+                <form action="/add_task/{{contact.id}}" method="post" class="mt-3">
+                    <!-- User ID: Usually this would be in a hidden input or from session -->
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                    <!-- Contact ID: This could also be set programmatically based on the view -->
+                    <input type="hidden" name="contact_id" value="{{ contact.id }}">
+
+                    <!-- Task Type -->
+                    <div class="form-group">
+                        <label for="task_type"><strong>Task Type:</strong></label>
+                        <select name="task_type" class="form-control" required>
+                            <option value="Call">Call</option>
+                            <option value="Email">Email</option>
+                            <option value="Text">Text</option>
+                            <option value="Zoom">Zoom</option>
+                        </select>
+                    </div>
+
+                    <!-- Due Date and Time -->
+                    <div class="form-group">
+                        <label for="due_date"><strong>Due Date and Time:</strong></label>
+                        <input type="datetime-local" name="due_date" class="form-control" required>
+                    </div>
+
+
+                    <!-- Task Notes -->
+                    <div class="form-group">
+                        <label for="task_notes"><strong>Task Notes:</strong></label>
+                        <textarea name="task_notes" class="form-control"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </form>
+
+
+            </div>
+        </div>
+        <!-- right side wall -->
+        <div class="container right-wall mt-5">
+            <h2>Tasks</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Task Type</th>
+                        <th scope="col">Notes</th>
+                        <th scope="col">Complete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.task_type }}</td>
+                        <td>{{ task.task_notes }}</td>
+                        <td>
+                            <form action="/edit_task/{{ task.id }}" method="POST">
+
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                            <form action="/remove_task/{{ task.id }}" method="POST">
+
+                                <button type="submit" class="btn btn-success">Complete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
